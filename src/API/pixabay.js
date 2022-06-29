@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Notiflix from 'notiflix';
 //----------------------------------------------//
 
 const KEY_PIX = '28317222-241a165b1fe9d2b89a64d5785';
@@ -15,7 +16,9 @@ function getImgs(name, page) {
     per_page: 5,
   });
 
-  return fetch(`${BASE_URL}?${params}`).then(r => r.json());
+  return fetch(`${BASE_URL}?${params}`).then(r => {
+    return r.json();
+  });
 }
 
 export { getImgs };

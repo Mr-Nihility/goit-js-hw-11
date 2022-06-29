@@ -2,6 +2,7 @@ import './css/styles.css';
 import { getImgs } from './API/pixabay';
 import { createMarkup } from './js/createMarkUp';
 import Notiflix from 'notiflix';
+import simpleLightbox from 'simplelightbox';
 //-------------------------------------------------//
 
 const refs = {
@@ -28,11 +29,19 @@ refs.form.addEventListener('submit', onSubmitForm);
 function onSubmitForm(evt) {
   evt.preventDefault();
   obs.unobserve(refs.target);
+
   refs.gallery.innerHTML = '';
   page = 1;
   searchQuery = evt.target.elements.searchQuery.value;
+
   getImgs(searchQuery, page)
     .then(response => {
+      if (!response.totalHits) {
+        return Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      }
+      Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
       console.log(response);
       createMarkup(response.hits);
       obs.observe(refs.target);
