@@ -13,7 +13,7 @@ function getImgs(name, page) {
     safesearch: false,
     q: name,
     page: page,
-    per_page: 5,
+    per_page: 40,
   });
 
   return fetch(`${BASE_URL}?${params}`).then(r => {

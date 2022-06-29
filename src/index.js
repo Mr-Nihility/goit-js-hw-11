@@ -1,4 +1,3 @@
-import './css/styles.css';
 import { getImgs } from './API/pixabay';
 import { createMarkup } from './js/createMarkUp';
 import Notiflix from 'notiflix';
@@ -12,6 +11,7 @@ const refs = {
 };
 let page = 1;
 let searchQuery = null;
+let lightbox;
 
 /////////////////////// for fun
 setInterval(() => {
@@ -46,6 +46,7 @@ function onSubmitForm(evt) {
       Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
       console.log(response);
       createMarkup(response.hits);
+      lightbox = new SimpleLightbox('.gallery a');
       obs.observe(refs.target);
     })
     .catch(console.log);
@@ -60,7 +61,9 @@ function onObs(entries) {
       getImgs(searchQuery, page)
         .then(response => {
           createMarkup(response.hits);
-          if (page * 5 > response.totalHits) {
+          lightbox.refresh();
+
+          if (page * 40 > response.totalHits) {
             obs.unobserve(refs.target);
             return Notiflix.Notify.failure(
               "We're sorry, but you've reached the end of search results."

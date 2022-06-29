@@ -14,7 +14,9 @@ function createMarkup(arr) {
       }) => {
         return `<div class="gallery__item">
                   <div class="photo-card">
-                    <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" data-lafge=" ${largeImageURL}" />
+                  <a class="gallery__item" href="${largeImageURL}">
+                    <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy"/>
+                    </a>
                     <div class="info">
                       <p class="info-item">
                         <b>Likes :</b> ${likes}
