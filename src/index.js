@@ -21,7 +21,7 @@ setInterval(() => {
 
 //-------------------------------------------------------//
 const obs = new IntersectionObserver(onObs, {
-  rootMargin: '300px',
+  rootMargin: '50px',
 });
 
 refs.form.addEventListener('submit', onSubmitForm);
@@ -33,7 +33,9 @@ function onSubmitForm(evt) {
   refs.gallery.innerHTML = '';
   page = 1;
   searchQuery = evt.target.elements.searchQuery.value;
-
+  if (searchQuery === '') {
+    return Notiflix.Notify.failure("Sorry, you didn't write anything");
+  }
   getImgs(searchQuery, page)
     .then(response => {
       if (!response.totalHits) {
@@ -51,6 +53,7 @@ function onSubmitForm(evt) {
 
 function onObs(entries) {
   entries.forEach(entry => {
+    console.log(entry);
     if (entry.isIntersecting) {
       page += 1;
 
@@ -58,6 +61,7 @@ function onObs(entries) {
         .then(response => {
           createMarkup(response.hits);
           if (page * 5 > response.totalHits) {
+            obs.unobserve(refs.target);
             return Notiflix.Notify.failure(
               "We're sorry, but you've reached the end of search results."
             );
