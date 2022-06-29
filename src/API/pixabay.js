@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Notiflix from 'notiflix';
 //----------------------------------------------//
 
 const KEY_PIX = '28317222-241a165b1fe9d2b89a64d5785';

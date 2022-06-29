@@ -1,7 +1,8 @@
 import { getImgs } from './API/pixabay';
 import { createMarkup } from './js/createMarkUp';
 import Notiflix from 'notiflix';
-import simpleLightbox from 'simplelightbox';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 //-------------------------------------------------//
 
 const refs = {
@@ -17,11 +18,11 @@ let lightbox;
 setInterval(() => {
   document.body.style.backgroundColor = getRandomHexColor();
   refs.form.style.backgroundColor = getRandomHexColor();
-}, 5000);
+}, 3000);
 
 //-------------------------------------------------------//
 const obs = new IntersectionObserver(onObs, {
-  rootMargin: '50px',
+  rootMargin: '300px',
 });
 
 refs.form.addEventListener('submit', onSubmitForm);
