@@ -39,14 +39,17 @@ function onSubmitForm(evt) {
   }
   getImgs(searchQuery, page)
     .then(response => {
-      if (!response.totalHits) {
+      console.log(response);
+      if (!response.data.totalHits) {
         return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
-      Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
-      console.log(response);
-      createMarkup(response.hits);
+      Notiflix.Notify.success(
+        `Hooray! We found ${response.data.totalHits} images.`
+      );
+      console.log(response.data);
+      createMarkup(response.data.hits);
       lightbox = new SimpleLightbox('.gallery a');
       obs.observe(refs.target);
     })
@@ -61,10 +64,10 @@ function onObs(entries) {
 
       getImgs(searchQuery, page)
         .then(response => {
-          createMarkup(response.hits);
+          createMarkup(response.data.hits);
           lightbox.refresh();
 
-          if (page * 40 > response.totalHits) {
+          if (page * 40 > response.data.totalHits) {
             obs.unobserve(refs.target);
             return Notiflix.Notify.failure(
               "We're sorry, but you've reached the end of search results."
