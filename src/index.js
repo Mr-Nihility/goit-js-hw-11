@@ -3,6 +3,8 @@ import { createMarkup } from './js/createMarkUp';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { Spinner } from 'spin.js';
+import { spiner } from './js/spiner';
 //-------------------------------------------------//
 
 const refs = {
@@ -10,6 +12,7 @@ const refs = {
   target: document.querySelector('.target'),
   gallery: document.querySelector('.gallery'),
 };
+spiner.spin(refs.gallery);
 let page = 1;
 let searchQuery = null;
 let lightbox;
@@ -29,6 +32,7 @@ refs.form.addEventListener('submit', onSubmitForm);
 //---------------------------------------------------------//
 function onSubmitForm(evt) {
   evt.preventDefault();
+
   obs.unobserve(refs.target);
 
   refs.gallery.innerHTML = '';
